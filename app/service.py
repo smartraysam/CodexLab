@@ -10,13 +10,15 @@ def list_tasks(status: str | None = None, q: str | None = None) -> list[dict[str
     """Return task records, optionally filtered by status and search text."""
     tasks = load_tasks()
     filtered: list[dict[str, Any]] = []
+    search = q.casefold() if q else None
 
     for task in tasks:
         if status and task["status"] != status:
             continue
 
-        # Instructor note: partial feature for the lab.
-        # The route already accepts `q`, but search is not implemented yet.
+        if search and search not in task["title"].casefold() and search not in task["description"].casefold():
+            continue
+
         filtered.append(task)
 
     return filtered
