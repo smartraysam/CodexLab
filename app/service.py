@@ -12,9 +12,7 @@ def list_tasks(status: str | None = None, q: str | None = None) -> list[dict[str
     filtered: list[dict[str, Any]] = []
 
     for task in tasks:
-        # Instructor note: intentional bug for the lab.
-        # This uses the literal string "status" instead of the query parameter value.
-        if status and task["status"] != "status":
+        if status and task["status"] != status:
             continue
 
         # Instructor note: partial feature for the lab.
